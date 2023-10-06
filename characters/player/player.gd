@@ -28,6 +28,11 @@ var can_dodge = true
 # Health
 @onready var health = $Health
 
+# Attack
+@onready var attack_timer = $Attack/AttackTimer
+var can_attack = true
+
+
 func _ready():
 	set_stats()
 	set_nodes()
@@ -51,10 +56,12 @@ func set_stats():
 func set_nodes():
 	dodge_timer.wait_time = stats.dgcd
 	invulnerable_timer.wait_time = stats.dginv
+	attack_timer.wait_time = stats.atkspd
 
 func _physics_process(delta):
 	move_player()
 	dodge() if Input.is_action_just_pressed("dodge") else null
+	attack() if Input.is_action_pressed("attack") else null
 
 
 func get_input():
@@ -83,6 +90,13 @@ func dodge():
 		dodge_timer.start()
 		invulnerable_timer.start()
 
+func attack():
+	if can_attack:
+		print("attack")
+		can_attack = false
+		attack_timer.start()
+	
+
 func death():
 	print("you die")
 
@@ -93,3 +107,7 @@ func _on_invulnerable_timer_timeout():
 	# Returns the values to normal
 	stats.spd = stats.spd / 2
 	_state = States.ALIVE
+
+
+func _on_attack_timer_timeout():
+	can_attack = true
