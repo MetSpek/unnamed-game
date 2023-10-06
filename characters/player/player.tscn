@@ -1,6 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://1x0khwlxcdjk"]
+[gd_scene load_steps=4 format=3 uid="uid://1x0khwlxcdjk"]
 
 [ext_resource type="Script" path="res://characters/player/player.gd" id="1_t001g"]
+[ext_resource type="Texture2D" uid="uid://ysphqdrl7jor" path="res://icon.svg" id="2_rutf5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hh61m"]
+radius = 32.0156
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 2
 script = ExtResource("1_t001g")
+base_speed = 300
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.9)
+texture = ExtResource("2_rutf5")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 25)
+shape = SubResource("CircleShape2D_hh61m")
+
+[node name="Camera" type="Camera2D" parent="."]
+scale = Vector2(0.5, 0.9)
+position_smoothing_enabled = true
