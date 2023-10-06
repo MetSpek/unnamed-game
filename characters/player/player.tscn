@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://1x0khwlxcdjk"]
+[gd_scene load_steps=5 format=3 uid="uid://1x0khwlxcdjk"]
 
 [ext_resource type="Script" path="res://characters/player/player.gd" id="1_t001g"]
 [ext_resource type="Texture2D" uid="uid://ysphqdrl7jor" path="res://icon.svg" id="2_rutf5"]
+[ext_resource type="Script" path="res://system/general/health.gd" id="3_30cus"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hh61m"]
 radius = 32.0156
@@ -9,7 +10,10 @@ radius = 32.0156
 [node name="Player" type="CharacterBody2D"]
 collision_mask = 2
 script = ExtResource("1_t001g")
+base_health = 20
 base_speed = 300
+base_dodge_cooldown = 1.0
+base_dodge_invulnerability = 0.2
 
 [node name="Sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.9)
@@ -22,3 +26,17 @@ shape = SubResource("CircleShape2D_hh61m")
 [node name="Camera" type="Camera2D" parent="."]
 scale = Vector2(0.5, 0.9)
 position_smoothing_enabled = true
+
+[node name="Dodge" type="Node" parent="."]
+
+[node name="DodgeTimer" type="Timer" parent="Dodge"]
+one_shot = true
+
+[node name="InvulnerableTimer" type="Timer" parent="Dodge"]
+one_shot = true
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("3_30cus")
+
+[connection signal="timeout" from="Dodge/DodgeTimer" to="." method="_on_dodge_timer_timeout"]
+[connection signal="timeout" from="Dodge/InvulnerableTimer" to="." method="_on_invulnerable_timer_timeout"]

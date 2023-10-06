@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-enum States {ALIVE}
+enum States {ALIVE, INVULNERABLE}
 
 var _state : int = States.ALIVE
 
@@ -9,19 +9,29 @@ var _state : int = States.ALIVE
 @export var base_speed = 0
 @export var base_attack_speed = 0
 
-@export var base_strength = 0
-@export var base_dexterity = 0
-@export var base_intelligence = 0
-@export var base_luck = 0
+@export var base_strength : int = 0
+@export var base_dexterity : int = 0
+@export var base_intelligence : int = 0
+@export var base_luck : int = 0
 
-@export var base_dodge_amount = 0
-@export var base_dodge_cooldown = 0
-@export var base_dodge_invulnerability = 0
+@export var base_dodge_amount : int = 0
+@export var base_dodge_cooldown : float = 0
+@export var base_dodge_invulnerability : float = 0
 
 var stats
 
+# Dodging
+@onready var dodge_timer = $Dodge/DodgeTimer
+@onready var invulnerable_timer = $Dodge/InvulnerableTimer
+var can_dodge = true
+
+# Health
+@onready var health = $Health
+
 func _ready():
 	set_stats()
+	set_nodes()
+
 
 # Sets the players statics from the editor
 func set_stats():
@@ -38,17 +48,48 @@ func set_stats():
 		"dginv" : base_dodge_invulnerability
 	}
 
+func set_nodes():
+	dodge_timer.wait_time = stats.dgcd
+	invulnerable_timer.wait_time = stats.dginv
+
 func _physics_process(delta):
 	move_player()
+	dodge() if Input.is_action_just_pressed("dodge") else null
+
+
+func get_input():
+	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	return direction
 
 func move_player():
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	var direction = get_input()
 	if direction:
 		velocity = direction * stats.spd
 	else:
 		velocity.x = move_toward(velocity.x, 0, stats.spd)
 		velocity.y = move_toward(velocity.y, 0, stats.spd)
-
 	move_and_slide()
+
+func dodge():
+	if can_dodge:
+	
+		# Increase movement speed and make character invulnerable
+		stats.spd = stats.spd * 2
+		_state = States.INVULNERABLE
+		
+		can_dodge = false
+		dodge_timer.start()
+		invulnerable_timer.start()
+
+func death():
+	print("you die")
+
+func _on_dodge_timer_timeout():
+	can_dodge = true
+
+func _on_invulnerable_timer_timeout():
+	# Returns the values to normal
+	stats.spd = stats.spd / 2
+	_state = States.ALIVE
