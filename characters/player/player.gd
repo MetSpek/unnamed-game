@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-enum States {ALIVE, INVULNERABLE}
+enum States {ALIVE, INVULNERABLE, DEAD}
 
 var _state : int = States.ALIVE
 
@@ -59,9 +59,10 @@ func set_nodes():
 	attack_timer.wait_time = stats.atkspd
 
 func _physics_process(delta):
-	move_player()
-	dodge() if Input.is_action_just_pressed("dodge") else null
-	attack() if Input.is_action_pressed("attack") else null
+	if not _state == States.DEAD:
+		move_player()
+		dodge() if Input.is_action_just_pressed("dodge") else null
+		attack() if Input.is_action_pressed("attack") else null
 
 
 func get_input():
@@ -83,7 +84,7 @@ func dodge():
 	if can_dodge:
 	
 		# Increase movement speed and make character invulnerable
-		stats.spd = stats.spd * 2
+		stats.spd = stats.spd * 3
 		_state = States.INVULNERABLE
 		
 		can_dodge = false
@@ -95,17 +96,18 @@ func attack():
 		print("attack")
 		can_attack = false
 		attack_timer.start()
-	
+		stats.hp = health.decrease_hp(stats.hp, 10)
+		death() if health.check_death(stats.hp) else null
 
 func death():
-	print("you die")
+	_state = States.DEAD
 
 func _on_dodge_timer_timeout():
 	can_dodge = true
 
 func _on_invulnerable_timer_timeout():
 	# Returns the values to normal
-	stats.spd = stats.spd / 2
+	stats.spd = stats.spd / 3
 	_state = States.ALIVE
 
 
