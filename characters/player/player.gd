@@ -32,6 +32,9 @@ var can_dodge = true
 @onready var attack_timer = $Attack/AttackTimer
 var can_attack = true
 
+# Inventory
+var inventory = ["firebolt", "haste", "magic missile"]
+var current_inventory_index : int = 0
 
 func _ready():
 	set_stats()
@@ -63,7 +66,8 @@ func _physics_process(delta):
 		move_player()
 		dodge() if Input.is_action_just_pressed("dodge") else null
 		attack() if Input.is_action_pressed("attack") else null
-
+		move_inventory("up") if Input.is_action_just_pressed("inventory_up") else move_inventory("down") if Input.is_action_just_pressed("inventory_down") else null
+		use_item() if Input.is_action_just_pressed("use") else null
 
 func get_input():
 	var direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -102,6 +106,20 @@ func attack():
 func death():
 	_state = States.DEAD
 
+func move_inventory(direction):
+	match direction:
+		"up":
+			current_inventory_index += 1
+			if current_inventory_index > inventory.size() - 1:
+				current_inventory_index = 0
+		"down":
+			current_inventory_index -= 1
+			if current_inventory_index < 0:
+				current_inventory_index = inventory.size() - 1
+
+func use_item():
+	print("Use Item " + str(inventory[current_inventory_index]))
+
 func _on_dodge_timer_timeout():
 	can_dodge = true
 
@@ -109,7 +127,6 @@ func _on_invulnerable_timer_timeout():
 	# Returns the values to normal
 	stats.spd = stats.spd / 3
 	_state = States.ALIVE
-
 
 func _on_attack_timer_timeout():
 	can_attack = true
