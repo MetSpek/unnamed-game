@@ -20,6 +20,10 @@ var _state : int = States.ALIVE
 
 var stats
 
+# Animation
+@onready var sprite = $Sprite
+@onready var animation_player = $AnimationPlayer
+
 # Dodging
 @onready var dodge_timer = $Dodge/DodgeTimer
 @onready var invulnerable_timer = $Dodge/InvulnerableTimer
@@ -33,12 +37,16 @@ var can_dodge = true
 var can_attack = true
 
 # Inventory
-var inventory = ["firebolt", "haste", "magic missile"]
+@onready var hand = $Hand
+var inventory = []
+var item = null
+var weapon = null
 var current_inventory_index : int = 0
 
 func _ready():
 	set_stats()
 	set_nodes()
+	set_weapon_stats()
 
 
 # Sets the players statics from the editor
@@ -59,13 +67,16 @@ func set_stats():
 func set_nodes():
 	dodge_timer.wait_time = stats.dgcd
 	invulnerable_timer.wait_time = stats.dginv
-	attack_timer.wait_time = stats.atkspd
 
 func _physics_process(delta):
 	if not _state == States.DEAD:
 		move_player()
+		animate_player()
+		
 		dodge() if Input.is_action_just_pressed("dodge") else null
+		
 		attack() if Input.is_action_pressed("attack") else null
+		
 		move_inventory("up") if Input.is_action_just_pressed("inventory_up") else move_inventory("down") if Input.is_action_just_pressed("inventory_down") else null
 		use_item() if Input.is_action_just_pressed("use") else null
 
@@ -84,24 +95,42 @@ func move_player():
 		velocity.y = move_toward(velocity.y, 0, stats.spd)
 	move_and_slide()
 
+func animate_player():
+#	if velocity.x != 0:
+#		sprite.flip_h = true if velocity.x > 0 else false
+
+	sprite.flip_h = true if get_local_mouse_position().x > 0 else false
+	hand.look_at(get_global_mouse_position())
+
 func dodge():
 	if can_dodge:
-	
+		if velocity == Vector2(0,0):
+			return
 		# Increase movement speed and make character invulnerable
 		stats.spd = stats.spd * 3
 		_state = States.INVULNERABLE
+		
+		print(velocity.x)
+		if sprite.flip_h == true:
+			animation_player.play("dodge_right")
+		else:
+			animation_player.play("dodge_left") 
 		
 		can_dodge = false
 		dodge_timer.start()
 		invulnerable_timer.start()
 
 func attack():
-	if can_attack:
-		print("attack")
+#	if can_attack:
+#
+		if weapon.has_method("attack"):
+			weapon.attack()
+			
 		can_attack = false
 		attack_timer.start()
-		stats.hp = health.decrease_hp(stats.hp, 10)
-		death() if health.check_death(stats.hp) else null
+		
+#		stats.hp = health.decrease_hp(stats.hp, 10)
+#		death() if health.check_death(stats.hp) else null
 
 func death():
 	_state = States.DEAD
@@ -119,6 +148,12 @@ func move_inventory(direction):
 
 func use_item():
 	print("Use Item " + str(inventory[current_inventory_index]))
+
+func set_weapon_stats():
+	weapon = hand.get_child(0)
+	weapon.attack_speed_player = stats.atkspd
+	weapon.attack_damage_player = stats.str
+#	attack_timer.wait_time = stats.atkspd / weapon.attack_speed
 
 func _on_dodge_timer_timeout():
 	can_dodge = true
