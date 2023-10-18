@@ -9,7 +9,7 @@ var can_attack = true
 var attack_speed_player : float
 
 var current_attack = 1
-@export var attack_pattern_amount = 3
+var attack_pattern_amount : int
 
 @onready var attack_delay_timer = $HitBox/AttackDelayTimer
 @onready var attack_duration_timer = $HitBox/AttackDurationTimer
@@ -18,6 +18,7 @@ var current_attack = 1
 
 func _ready():
 	attack_delay_timer.wait_time = attack_delay
+	attack_pattern_amount = animation_player.get_animation_list().size() - 1
 
 func attack():
 	if not animation_player.is_playing() and can_attack:
@@ -27,12 +28,15 @@ func attack():
 		play_animation()
 		
 		attack_duration_timer.wait_time = animation_player.current_animation_length
-		attack_duration_timer.start()
-		attack_delay_timer.start()
+		attack_delay_timer.wait_time = animation_player.current_animation_length * 2
 		
 		current_attack += 1
 		if current_attack > attack_pattern_amount:
 			current_attack = 1
+			attack_delay_timer.wait_time = animation_player.current_animation_length * 4
+		
+		attack_duration_timer.start()
+		attack_delay_timer.start()
 
 func play_animation():
 	animation_player.speed_scale = attack_speed * attack_speed_player
