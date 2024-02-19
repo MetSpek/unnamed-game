@@ -1,0 +1,222 @@
+[gd_scene load_steps=12 format=3 uid="uid://d3e7gdlbqkg7q"]
+
+[ext_resource type="Script" path="res://System/Player/HUD.gd" id="1_drbkx"]
+[ext_resource type="Script" path="res://System/Player/Bar.gd" id="2_pswyd"]
+[ext_resource type="Texture2D" uid="uid://cnxhyv7r8ovlm" path="res://Resources/System/UI/HUD/BarOverlay.png" id="3_wn13d"]
+[ext_resource type="Script" path="res://System/Player/Hand.gd" id="4_quctm"]
+
+[sub_resource type="Gradient" id="Gradient_iw06m"]
+offsets = PackedFloat32Array(0.997297)
+colors = PackedColorArray(0.0807833, 0.0807833, 0.0807833, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_b1pmf"]
+gradient = SubResource("Gradient_iw06m")
+
+[sub_resource type="Gradient" id="Gradient_57ltf"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 0.453848, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8qfy1"]
+gradient = SubResource("Gradient_57ltf")
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_o2l47"]
+gradient = SubResource("Gradient_iw06m")
+
+[sub_resource type="Gradient" id="Gradient_4qhjj"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.175894, 0.368486, 0.635843, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jo0ff"]
+gradient = SubResource("Gradient_4qhjj")
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_drbkx")
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Bar" type="Control" parent="Container" node_paths=PackedStringArray("HUD")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = -60.0
+offset_right = 40.0
+offset_bottom = -60.0
+grow_vertical = 0
+script = ExtResource("2_pswyd")
+HUD = NodePath("../..")
+
+[node name="HealthBar" type="TextureProgressBar" parent="Container/Bar"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -9.0
+offset_top = -39.0
+offset_right = 221.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 50.0
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_b1pmf")
+texture_progress = SubResource("GradientTexture2D_8qfy1")
+
+[node name="HealthLabel" type="Label" parent="Container/Bar/HealthBar"]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -13.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "   Health"
+
+[node name="ManaBar" type="TextureProgressBar" parent="Container/Bar"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -9.0
+offset_top = -8.0
+offset_right = 117.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+nine_patch_stretch = true
+texture_under = SubResource("GradientTexture1D_o2l47")
+texture_progress = SubResource("GradientTexture2D_jo0ff")
+
+[node name="ManaLabel" type="Label" parent="Container/Bar/ManaBar"]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "   Mana"
+
+[node name="BarOverlay" type="Sprite2D" parent="Container/Bar"]
+texture_filter = 1
+position = Vector2(102, -11)
+scale = Vector2(6, 6)
+texture = ExtResource("3_wn13d")
+
+[node name="Stats" type="Control" parent="Container"]
+visible = false
+custom_minimum_size = Vector2(125, 75)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = -45.0
+offset_right = 45.0
+offset_bottom = -5.0
+grow_vertical = 0
+
+[node name="ColorRect" type="ColorRect" parent="Container/Stats"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.211765, 0.211765, 0.211765, 0.490196)
+
+[node name="StatsHBoxContainer" type="VBoxContainer" parent="Container/Stats"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.0
+offset_top = -25.0
+offset_right = 46.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Health" type="Label" parent="Container/Stats/StatsHBoxContainer"]
+layout_mode = 2
+text = "Health: Null"
+
+[node name="Mana" type="Label" parent="Container/Stats/StatsHBoxContainer"]
+layout_mode = 2
+text = "Mana: Null"
+
+[node name="Deck" type="Control" parent="Container"]
+visible = false
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -46.0
+offset_top = -45.0
+offset_right = -6.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="ColorRect2" type="ColorRect" parent="Container/Deck"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.211765, 0.211765, 0.211765, 0.490196)
+
+[node name="Card" type="Label" parent="Container/Deck"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.0
+offset_top = -11.5
+offset_right = 63.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Next card: None"
+
+[node name="Hand" type="Control" parent="Container" groups=["HUDHand"]]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -109.0
+offset_top = -143.0
+offset_right = -69.0
+offset_bottom = -103.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("4_quctm")

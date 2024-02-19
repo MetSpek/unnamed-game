@@ -1,0 +1,36 @@
+Changelog V0.0.2
+
+# Visuals
+- Player now has animations
+- Dummy now has own visuals and animations
+- Sword now has viasuals and animations
+- Deck now has basic visuals
+- Magic Missile now has visuals
+- FireBolt now has visuals
+- IceBall now has visuals
+
+# Player
+- Increased dodge length from 0.2 -> 0.3
+- Increased dodge cooldown from 0.1 -> 2
+- Decreased mana recharge rate from 0.5 - 0.2
+- Now able to walk through enemies
+
+# Weapons
+## Shortsword
+- Increased primary attack cooldown from 0.5 -> 1
+- Decreased charged atttack cooldown from 3 -> 1
+- Decreased charged attack range from 2 -> 1.3
+
+# Magic
+## Magic missile
+- Starts homing after 0.1 second
+
+# Enemies
+- Added Slime enemy
+
+# Fixes
+- Hitboxes are now more accurate
+
+# Known Issues
+- No correct font
+- Slime AI is stupid

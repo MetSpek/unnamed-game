@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbd7lw7lcj3t1"]
+
+[ext_resource type="Script" path="res://Components/Weapons/WeaponHitboxComponent.gd" id="1_ke3a2"]
+
+[node name="WeaponHitboxComponent" type="Area2D"]
+collision_layer = 16
+collision_mask = 132
+script = ExtResource("1_ke3a2")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

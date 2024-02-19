@@ -1,0 +1,82 @@
+[gd_scene load_steps=13 format=3 uid="uid://bl5h1mvjes1qy"]
+
+[ext_resource type="Script" path="res://Misc/Magic/Ranged/MagicMissile/MagicMissile.gd" id="1_m52we"]
+[ext_resource type="Texture2D" uid="uid://bpjddq5ekltxh" path="res://Resources/Misc/Magic/Ranged/MagicMissile/MagicMissile.png" id="2_5mia7"]
+[ext_resource type="PackedScene" uid="uid://cm2cot0haprc8" path="res://Components/Magic/MagicProjectileComponent.tscn" id="2_34lss"]
+[ext_resource type="PackedScene" uid="uid://bk43rb6sn1jv5" path="res://Components/Magic/MagicParticleComponent.tscn" id="2_fcn7m"]
+[ext_resource type="Texture2D" uid="uid://tob1s1wmld8x" path="res://Resources/Misc/Magic/Particles/MagicParticle.png" id="3_2uklv"]
+[ext_resource type="PackedScene" uid="uid://dfodrnvompgvl" path="res://Components/Magic/MagicDamageComponent.tscn" id="3_t0obu"]
+[ext_resource type="PackedScene" uid="uid://bjivrvg2wxrq8" path="res://Components/Magic/MagicHitboxComponent.tscn" id="5_hri85"]
+[ext_resource type="PackedScene" uid="uid://c06o6jdluufdt" path="res://Components/Magic/MagicDisableComponent.tscn" id="6_a0djy"]
+[ext_resource type="PackedScene" uid="uid://db4gcbbsvtrkv" path="res://Components/Magic/ProjectileHomingComponent.tscn" id="6_a0ypl"]
+
+[sub_resource type="Curve" id="Curve_lhlpu"]
+min_value = -360.0
+max_value = 360.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5c3x7"]
+radius = 350.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yi5im"]
+radius = 13.0
+
+[node name="MagicMissile" type="Node2D"]
+script = ExtResource("1_m52we")
+
+[node name="MagicParticleComponent" parent="." instance=ExtResource("2_fcn7m")]
+modulate = Color(1, 1, 1, 0.196078)
+emitting = true
+amount = 50
+lifetime = 0.2
+draw_order = 1
+texture = ExtResource("3_2uklv")
+direction = Vector2(-30, 0)
+gravity = Vector2(0, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 37.56
+angle_min = -45.0
+angle_max = 45.0
+angle_curve = SubResource("Curve_lhlpu")
+scale_amount_min = 4.0
+scale_amount_max = 4.0
+color = Color(0.552941, 0.278431, 0.85098, 1)
+hue_variation_min = -0.05
+hue_variation_max = 0.12
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.72549, 0.172549, 0.654902, 1)
+texture_filter = 1
+scale = Vector2(4, 4)
+texture = ExtResource("2_5mia7")
+
+[node name="MagicProjectileComponent" parent="." node_paths=PackedStringArray("magic_weapon") instance=ExtResource("2_34lss")]
+magic_weapon = NodePath("..")
+BASE_SPEED = 800
+is_homing = true
+
+[node name="MagicDamageComponent" parent="." instance=ExtResource("3_t0obu")]
+BASE_DAMAGE = 3
+
+[node name="MagicDisableComponent" parent="." node_paths=PackedStringArray("magic_projectile_component", "magic_particle_component", "sprite", "magic_hitbox_component") instance=ExtResource("6_a0djy")]
+magic_projectile_component = NodePath("../MagicProjectileComponent")
+magic_particle_component = NodePath("../MagicParticleComponent")
+sprite = NodePath("../Sprite2D")
+magic_hitbox_component = NodePath("../MagicHitboxComponent")
+
+[node name="ProjectileHomingComponent" parent="." node_paths=PackedStringArray("magic_projectile_component") instance=ExtResource("6_a0ypl")]
+visible = false
+magic_projectile_component = NodePath("../MagicProjectileComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProjectileHomingComponent"]
+shape = SubResource("CircleShape2D_5c3x7")
+
+[node name="MagicHitboxComponent" parent="." node_paths=PackedStringArray("magic_weapon", "magic_damage_component") instance=ExtResource("5_hri85")]
+visible = false
+collision_mask = 130
+magic_weapon = NodePath("..")
+magic_damage_component = NodePath("../MagicDamageComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MagicHitboxComponent"]
+shape = SubResource("CircleShape2D_yi5im")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://2aiy1fwspkgt"]
+
+[ext_resource type="Script" path="res://Components/Magic/MagicManaComponent.gd" id="1_ot2op"]
+
+[node name="MagicManaComponent" type="Node"]
+script = ExtResource("1_ot2op")

@@ -1,0 +1,126 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhwrv0qiengy"]
+
+[ext_resource type="PackedScene" uid="uid://cojnrytvoxxg2" path="res://Characters/Player/player.tscn" id="1_yr625"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8gn0s"]
+size = Vector2(1500, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s7jto"]
+size = Vector2(50, 1500)
+
+[node name="TestLevel" type="Node2D"]
+
+[node name="Enviroment" type="Node2D" parent="."]
+
+[node name="Floor" type="ColorRect" parent="Enviroment"]
+custom_minimum_size = Vector2(1500, 1500)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -500.0
+offset_right = 500.0
+offset_bottom = 500.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.709804, 0.709804, 0.709804, 1)
+
+[node name="Wall" type="StaticBody2D" parent="Enviroment"]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, 750)
+collision_layer = 2
+
+[node name="Texture" type="ColorRect" parent="Enviroment/Wall"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -750.0
+offset_top = -50.0
+offset_right = 750.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.764706, 0.592157, 0.333333, 1)
+
+[node name="Collision" type="CollisionShape2D" parent="Enviroment/Wall"]
+position = Vector2(0, 25)
+shape = SubResource("RectangleShape2D_8gn0s")
+
+[node name="Wall2" type="StaticBody2D" parent="Enviroment"]
+position = Vector2(0, -750)
+collision_layer = 2
+
+[node name="Texture" type="ColorRect" parent="Enviroment/Wall2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -750.0
+offset_top = -50.0
+offset_right = 750.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.764706, 0.592157, 0.333333, 1)
+
+[node name="Collision" type="CollisionShape2D" parent="Enviroment/Wall2"]
+position = Vector2(0, 25)
+shape = SubResource("RectangleShape2D_8gn0s")
+
+[node name="Wall3" type="StaticBody2D" parent="Enviroment"]
+position = Vector2(-800, 0)
+collision_layer = 2
+
+[node name="Texture" type="ColorRect" parent="Enviroment/Wall3"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -750.0
+offset_right = 50.0
+offset_bottom = 750.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.764706, 0.592157, 0.333333, 1)
+
+[node name="Collision" type="CollisionShape2D" parent="Enviroment/Wall3"]
+position = Vector2(25, 0)
+shape = SubResource("RectangleShape2D_s7jto")
+
+[node name="Wall4" type="StaticBody2D" parent="Enviroment"]
+position = Vector2(800, 0)
+collision_layer = 2
+
+[node name="Texture" type="ColorRect" parent="Enviroment/Wall4"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -750.0
+offset_right = 50.0
+offset_bottom = 750.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.764706, 0.592157, 0.333333, 1)
+
+[node name="Collision" type="CollisionShape2D" parent="Enviroment/Wall4"]
+position = Vector2(-25, 0)
+shape = SubResource("RectangleShape2D_s7jto")
+
+[node name="Player" parent="." instance=ExtResource("1_yr625")]

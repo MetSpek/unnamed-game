@@ -1,0 +1,105 @@
+[gd_scene load_steps=15 format=3 uid="uid://cxelwhj4guv5o"]
+
+[ext_resource type="Script" path="res://Misc/Magic/Ranged/IceBall/IceBall.gd" id="1_omkae"]
+[ext_resource type="Texture2D" uid="uid://bi8md35rrmrqj" path="res://Resources/Misc/Magic/Ranged/IceBall/IceBall.png" id="2_j7wdm"]
+[ext_resource type="PackedScene" uid="uid://bjivrvg2wxrq8" path="res://Components/Magic/MagicHitboxComponent.tscn" id="2_j58xj"]
+[ext_resource type="PackedScene" uid="uid://cm2cot0haprc8" path="res://Components/Magic/MagicProjectileComponent.tscn" id="3_5ojlp"]
+[ext_resource type="PackedScene" uid="uid://bk43rb6sn1jv5" path="res://Components/Magic/MagicParticleComponent.tscn" id="3_y6muj"]
+[ext_resource type="Texture2D" uid="uid://tob1s1wmld8x" path="res://Resources/Misc/Magic/Particles/MagicParticle.png" id="4_5nk10"]
+[ext_resource type="PackedScene" uid="uid://dfodrnvompgvl" path="res://Components/Magic/MagicDamageComponent.tscn" id="4_r4tfa"]
+[ext_resource type="PackedScene" uid="uid://2aiy1fwspkgt" path="res://Components/Magic/MagicManaComponent.tscn" id="5_pwbsf"]
+[ext_resource type="PackedScene" uid="uid://c06o6jdluufdt" path="res://Components/Magic/MagicDisableComponent.tscn" id="6_m1wl0"]
+
+[sub_resource type="Curve" id="Curve_3ehwx"]
+_data = [Vector2(0, 0.993891), 0.0, 0.0, 0, 0, Vector2(0.785714, 0.773966), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_am1r8"]
+_data = [Vector2(0, 0.993891), 0.0, 0.0, 0, 0, Vector2(1, 0.444079), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_lmoyi"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.270588)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v654c"]
+radius = 24.0208
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tplbv"]
+radius = 141.004
+
+[node name="IceBall" type="Node2D"]
+script = ExtResource("1_omkae")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(5, 5)
+texture = ExtResource("2_j7wdm")
+
+[node name="Explosion" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 250
+lifetime = 1.5
+one_shot = true
+speed_scale = 5.0
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 100.0
+initial_velocity_max = 150.0
+angle_min = -45.0
+angle_max = 45.0
+scale_amount_min = 0.0
+scale_amount_max = 8.0
+scale_amount_curve = SubResource("Curve_3ehwx")
+
+[node name="MagicParticleComponent" parent="." instance=ExtResource("3_y6muj")]
+position = Vector2(1, 0)
+amount = 300
+lifetime = 0.3
+texture = ExtResource("4_5nk10")
+emission_shape = 1
+emission_sphere_radius = 15.0
+direction = Vector2(-30, 0)
+gravity = Vector2(0, 0)
+initial_velocity_min = 35.3
+initial_velocity_max = 35.3
+angular_velocity_min = 100.0
+angular_velocity_max = 100.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_am1r8")
+color_ramp = SubResource("Gradient_lmoyi")
+
+[node name="MagicProjectileComponent" parent="." node_paths=PackedStringArray("magic_weapon") instance=ExtResource("3_5ojlp")]
+magic_weapon = NodePath("..")
+BASE_SPEED = 600
+
+[node name="MagicDamageComponent" parent="." instance=ExtResource("4_r4tfa")]
+BASE_DAMAGE = 30
+
+[node name="MagicManaComponent" parent="." instance=ExtResource("5_pwbsf")]
+BASE_MANA_COST = 50
+
+[node name="MagicDisableComponent" parent="." node_paths=PackedStringArray("magic_projectile_component", "magic_particle_component", "sprite") instance=ExtResource("6_m1wl0")]
+magic_projectile_component = NodePath("../MagicProjectileComponent")
+magic_particle_component = NodePath("../MagicParticleComponent")
+sprite = NodePath("../Sprite")
+
+[node name="TriggerHitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 134
+
+[node name="Trigger" type="CollisionShape2D" parent="TriggerHitbox"]
+shape = SubResource("CircleShape2D_v654c")
+
+[node name="MagicHitboxComponent2" parent="." node_paths=PackedStringArray("magic_weapon", "magic_damage_component") instance=ExtResource("2_j58xj")]
+magic_weapon = NodePath("..")
+magic_damage_component = NodePath("../MagicDamageComponent")
+
+[node name="AoE" type="CollisionShape2D" parent="MagicHitboxComponent2"]
+shape = SubResource("CircleShape2D_tplbv")
+disabled = true
+debug_color = Color(0.823529, 0.360784, 0.466667, 0.419608)
+
+[connection signal="area_entered" from="TriggerHitbox" to="." method="_on_trigger_hitbox_area_entered"]
+[connection signal="body_entered" from="TriggerHitbox" to="." method="_on_trigger_hitbox_body_entered"]

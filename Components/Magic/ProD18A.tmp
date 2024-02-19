@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://db4gcbbsvtrkv"]
+
+[ext_resource type="Script" path="res://Components/Magic/ProjectileHomingComponent.gd" id="1_ybvvq"]
+
+[node name="ProjectileHomingComponent" type="Area2D"]
+collision_layer = 8
+collision_mask = 128
+script = ExtResource("1_ybvvq")

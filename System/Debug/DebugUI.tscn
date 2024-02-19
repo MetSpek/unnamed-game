@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=3 uid="uid://dcihyk7ceswi"]
+
+[ext_resource type="Script" path="res://System/Debug/DebugUI.gd" id="1_mk8s0"]
+
+[node name="DebugUI" type="CanvasLayer"]
+script = ExtResource("1_mk8s0")
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -150.0
+offset_right = 231.0
+offset_bottom = 150.0
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="Background" type="ColorRect" parent="Container"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.219608, 0.219608, 0.219608, 0.415686)
+
+[node name="Title" type="Label" parent="Container"]
+layout_mode = 2
+offset_left = 52.0
+offset_right = 179.0
+offset_bottom = 30.0
+size_flags_horizontal = 4
+size_flags_vertical = 0
+theme_override_font_sizes/font_size = 21
+text = "Debug Menu"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Container"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 12.0
+offset_top = -119.5
+offset_right = 136.0
+offset_bottom = -15.5
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HealthLabel" type="Label" parent="Container/VBoxContainer"]
+layout_mode = 2
+text = "Health: Null"
+
+[node name="SpeedLabel" type="Label" parent="Container/VBoxContainer"]
+layout_mode = 2
+text = "Speed: Null"
+
+[node name="CanDodgeLabel" type="Label" parent="Container/VBoxContainer"]
+layout_mode = 2
+text = "Can Dodge: Null"
+
+[node name="CanAttackLabel" type="Label" parent="Container/VBoxContainer"]
+layout_mode = 2
+text = "Can Attack: Null"

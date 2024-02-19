@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bk43rb6sn1jv5"]
+
+[ext_resource type="Script" path="res://Components/Magic/MagicParticleComponent.gd" id="1_7827s"]
+
+[node name="MagicParticleComponent" type="CPUParticles2D"]
+texture_filter = 1
+emitting = false
+script = ExtResource("1_7827s")

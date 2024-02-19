@@ -1,132 +1,270 @@
-[gd_scene load_steps=11 format=3 uid="uid://1x0khwlxcdjk"]
+[gd_scene load_steps=22 format=3 uid="uid://cojnrytvoxxg2"]
 
-[ext_resource type="Script" path="res://characters/player/player.gd" id="1_t001g"]
-[ext_resource type="Texture2D" uid="uid://bljvb6f6tfofp" path="res://resources/characters/player/Player.png" id="2_vt2vl"]
-[ext_resource type="Script" path="res://system/general/health.gd" id="3_30cus"]
-[ext_resource type="Script" path="res://characters/player/Hand.gd" id="3_gknuo"]
-[ext_resource type="PackedScene" uid="uid://dneqlm5a8bowx" path="res://misc/weapons/short_sword.tscn" id="3_j3trn"]
+[ext_resource type="Script" path="res://Characters/Player/Player.gd" id="1_731if"]
+[ext_resource type="PackedScene" uid="uid://sk5khgxptof" path="res://Components/Characters/PlayerMovementComponent.tscn" id="2_10tjl"]
+[ext_resource type="Texture2D" uid="uid://brbblodiuli88" path="res://Resources/Characters/Player/Shadow.png" id="2_58llx"]
+[ext_resource type="PackedScene" uid="uid://d3e7gdlbqkg7q" path="res://System/Player/HUD.tscn" id="2_f2vrs"]
+[ext_resource type="Texture2D" uid="uid://i2h1uvtegltb" path="res://Resources/Characters/Player/Character_Standing.png" id="3_fy41h"]
+[ext_resource type="PackedScene" uid="uid://bq1h7k5un62xl" path="res://Components/Magic/MagicComponent.tscn" id="3_nghrj"]
+[ext_resource type="PackedScene" uid="uid://mh7ky5ei05dl" path="res://Components/Characters/DodgeComponent.tscn" id="4_3arpl"]
+[ext_resource type="Texture2D" uid="uid://c52jgd8w675n7" path="res://Resources/Characters/Player/Character_Walk_1.png" id="4_4cw1u"]
+[ext_resource type="Texture2D" uid="uid://c17kes6v6g8fy" path="res://Resources/Characters/Player/Character_Blink.png" id="4_8xb4x"]
+[ext_resource type="PackedScene" uid="uid://ccigibxvpl3h1" path="res://Misc/Weapons/ShortSword.tscn" id="4_bdgb2"]
+[ext_resource type="Texture2D" uid="uid://coc6lbvega7h2" path="res://Resources/Characters/Player/Character_Walk_2.png" id="5_1jfvr"]
+[ext_resource type="Texture2D" uid="uid://c4b8uypdul8jh" path="res://Resources/Characters/Player/Character_Walk_3.png" id="6_h0qfh"]
+[ext_resource type="PackedScene" uid="uid://714reroyuv4h" path="res://Components/General/HealthComponent.tscn" id="6_mg5u2"]
+[ext_resource type="Texture2D" uid="uid://mkfmxydrehby" path="res://Resources/Characters/Player/Character_Eyes.png" id="7_wbj86"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1f70r"]
-radius = 11.0
-height = 42.0
+[sub_resource type="SpriteFrames" id="SpriteFrames_xypdw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_fy41h")
+}],
+"loop": true,
+"name": &"Standing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_4cw1u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1jfvr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_h0qfh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1jfvr")
+}],
+"loop": true,
+"name": &"Walking",
+"speed": 5.0
+}]
 
-[sub_resource type="Animation" id="Animation_05t3e"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_tcdcf"]
+animations = [{
+"frames": [{
+"duration": 20.0,
+"texture": ExtResource("7_wbj86")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8xb4x")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_1toye"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:rotation")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Standing"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [0.0]
+"values": [Vector2(0, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hand:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-6, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_ixmtt"]
-resource_name = "dodge_left"
-length = 0.5
+[sub_resource type="Animation" id="Animation_haghe"]
+resource_name = "Standing"
+length = 4.0
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:rotation")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Standing"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hand:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [0.0, -6.28319]
+"values": [Vector2(-6, 0), Vector2(-6, 2), Vector2(-6, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_ljy2u"]
-resource_name = "dodge_right"
-length = 0.5
+[sub_resource type="Animation" id="Animation_xjynp"]
+resource_name = "Walking"
+length = 0.8
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:rotation")
+tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Walking"]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [0.0, 6.28319]
+"values": [Vector2(0, -2), Vector2(0, 0), Vector2(0, -2), Vector2(0, 0)]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_oqcwj"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jl8s7"]
 _data = {
-"RESET": SubResource("Animation_05t3e"),
-"dodge_left": SubResource("Animation_ixmtt"),
-"dodge_right": SubResource("Animation_ljy2u")
+"RESET": SubResource("Animation_1toye"),
+"Standing": SubResource("Animation_haghe"),
+"Walking": SubResource("Animation_xjynp")
 }
 
-[node name="Player" type="CharacterBody2D"]
-y_sort_enabled = true
-collision_mask = 6
-script = ExtResource("1_t001g")
-base_health = 20
-base_speed = 300
-base_attack_speed = 1
-base_strength = 1
-base_dexterity = 1
-base_intelligence = 1
-base_dodge_cooldown = 1.0
-base_dodge_invulnerability = 0.2
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_26nqa"]
+radius = 11.0
+height = 58.0
 
-[node name="Sprite" type="Sprite2D" parent="."]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+collision_mask = 2
+script = ExtResource("1_731if")
+
+[node name="UI" parent="." node_paths=PackedStringArray("health_component", "magic_component") instance=ExtResource("2_f2vrs")]
+health_component = NodePath("../HealthComponent")
+magic_component = NodePath("../MagicComponent")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(1, 26)
+scale = Vector2(4.9, 4.9)
+texture = ExtResource("2_58llx")
+
+[node name="DodgeComponent" parent="." node_paths=PackedStringArray("player", "player_movement_component") instance=ExtResource("4_3arpl")]
+position = Vector2(0, 15)
+BASE_DODGE_LENGTH = 0.3
+player = NodePath("..")
+player_movement_component = NodePath("../PlayerMovementComponent")
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Body"]
 texture_filter = 1
 position = Vector2(0, -15)
 scale = Vector2(5, 5)
-texture = ExtResource("2_vt2vl")
+sprite_frames = SubResource("SpriteFrames_xypdw")
+animation = &"Standing"
 flip_h = true
+
+[node name="Eyes" type="AnimatedSprite2D" parent="Body"]
+texture_filter = 1
+position = Vector2(0, -15)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_tcdcf")
+frame_progress = 0.0442078
+flip_h = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Body"]
+libraries = {
+"": SubResource("AnimationLibrary_jl8s7")
+}
+
+[node name="Hand" type="Node2D" parent="Body"]
+position = Vector2(-6, 0)
+
+[node name="ShortSword" parent="Body/Hand" instance=ExtResource("4_bdgb2")]
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 18)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_1f70r")
+shape = SubResource("CapsuleShape2D_26nqa")
 
-[node name="Camera" type="Camera2D" parent="."]
-scale = Vector2(0.5, 0.9)
-zoom = Vector2(1.2, 1.2)
-position_smoothing_speed = 10.0
-drag_left_margin = 0.1
-drag_top_margin = 0.1
-drag_right_margin = 0.1
-drag_bottom_margin = 0.1
+[node name="MagicComponent" parent="." instance=ExtResource("3_nghrj")]
+RECHARGE_RATE = 0.2
+RECHARGE_COOLDOWN = 3
 
-[node name="CardInventory" type="Node2D" parent="."]
+[node name="PlayerMovementComponent" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_10tjl")]
+BASE_MOVEMENT_SPEED = 400
+player = NodePath("..")
 
-[node name="Hand" type="Node2D" parent="."]
-position = Vector2(0, 3.8147e-06)
-script = ExtResource("3_gknuo")
+[node name="HealthComponent" parent="." groups=["PlayerHealth"] instance=ExtResource("6_mg5u2")]
 
-[node name="ShortSword" parent="Hand" instance=ExtResource("3_j3trn")]
-
-[node name="Dodge" type="Node" parent="."]
-
-[node name="DodgeTimer" type="Timer" parent="Dodge"]
-one_shot = true
-
-[node name="InvulnerableTimer" type="Timer" parent="Dodge"]
-one_shot = true
-
-[node name="Health" type="Node" parent="."]
-script = ExtResource("3_30cus")
-
-[node name="Attack" type="Node" parent="."]
-
-[node name="AttackTimer" type="Timer" parent="Attack"]
-one_shot = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_oqcwj")
-}
-
-[connection signal="timeout" from="Dodge/DodgeTimer" to="." method="_on_dodge_timer_timeout"]
-[connection signal="timeout" from="Dodge/InvulnerableTimer" to="." method="_on_invulnerable_timer_timeout"]
-[connection signal="timeout" from="Attack/AttackTimer" to="." method="_on_attack_timer_timeout"]
+[node name="Camera2D" type="Camera2D" parent="."]
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0

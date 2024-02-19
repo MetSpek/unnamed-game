@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://mh7ky5ei05dl"]
+
+[ext_resource type="Script" path="res://Components/Characters/DodgeComponent.gd" id="1_bmxd5"]
+
+[node name="DodgeComponent" type="Node"]
+script = ExtResource("1_bmxd5")
+
+[node name="CooldownTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]

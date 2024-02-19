@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b0s8xlsuoquht"]
+
+[ext_resource type="Script" path="res://Components/Weapons/CooldownComponent.gd" id="1_yjnfu"]
+
+[node name="CooldownComponent" type="Timer" groups=["CooldownComponent"]]
+one_shot = true
+script = ExtResource("1_yjnfu")
+
+[connection signal="timeout" from="." to="." method="_on_timeout"]
