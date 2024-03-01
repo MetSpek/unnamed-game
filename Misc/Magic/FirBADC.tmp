@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://5p15e0lye7ye"]
+
+[ext_resource type="Script" path="res://Misc/Magic/FireBolt.gd" id="1_5xxxn"]
+[ext_resource type="Texture2D" uid="uid://ysphqdrl7jor" path="res://icon.svg" id="2_kpm0k"]
+[ext_resource type="PackedScene" uid="uid://bjivrvg2wxrq8" path="res://Components/Magic/MagicHitboxComponent.tscn" id="3_kahsf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3w1jo"]
+radius = 28.8617
+
+[node name="FireBolt" type="Node2D"]
+script = ExtResource("1_5xxxn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.839216, 0.47451, 0.337255, 1)
+scale = Vector2(0.476563, 0.476563)
+texture = ExtResource("2_kpm0k")
+
+[node name="DamageHitboxComponent" parent="." node_paths=PackedStringArray("magic_weapon") instance=ExtResource("3_kahsf")]
+magic_weapon = NodePath("..")
+
+[node name="Collision" type="CollisionShape2D" parent="DamageHitboxComponent"]
+shape = SubResource("CircleShape2D_3w1jo")

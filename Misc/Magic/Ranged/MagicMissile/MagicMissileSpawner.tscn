@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://w2ub0saj03ho"]
+
+[ext_resource type="Script" path="res://Misc/Magic/Ranged/MagicMissile/MagicMissileSpawner.gd" id="1_gudsb"]
+[ext_resource type="PackedScene" uid="uid://2aiy1fwspkgt" path="res://Components/Magic/MagicManaComponent.tscn" id="2_f4clo"]
+
+[node name="MagicMissile" type="Node2D"]
+script = ExtResource("1_gudsb")
+
+[node name="MagicManaComponent" parent="." instance=ExtResource("2_f4clo")]
+BASE_MANA_COST = 30

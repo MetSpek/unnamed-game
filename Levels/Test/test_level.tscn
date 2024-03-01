@@ -1,0 +1,172 @@
+[gd_scene load_steps=7 format=3 uid="uid://dhwrv0qiengy"]
+
+[ext_resource type="Texture2D" uid="uid://bsons2pi4oifc" path="res://Resources/Prototype/Textures/Light/texture_13.png" id="1_uo3s1"]
+[ext_resource type="PackedScene" uid="uid://cojnrytvoxxg2" path="res://Characters/Player/Player.tscn" id="1_yr625"]
+[ext_resource type="PackedScene" uid="uid://bk8qrfhx3oyci" path="res://Characters/Other/Dummy.tscn" id="3_qhu7u"]
+[ext_resource type="PackedScene" uid="uid://4y7cgvkdtcy1" path="res://Characters/Enemies/Slime.tscn" id="4_dhxrs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8gn0s"]
+size = Vector2(1500, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s7jto"]
+size = Vector2(50, 1500)
+
+[node name="TestLevel" type="Node2D"]
+
+[node name="Enviroment" type="Node2D" parent="."]
+
+[node name="Floor" type="TextureRect" parent="Enviroment"]
+custom_minimum_size = Vector2(1500, 1500)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -500.0
+offset_top = -500.0
+offset_right = 500.0
+offset_bottom = 500.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_uo3s1")
+
+[node name="Wall" type="StaticBody2D" parent="Enviroment"]
+z_index = 1
+y_sort_enabled = true
+position = Vector2(0, 750)
+collision_layer = 2
+collision_mask = 9
+
+[node name="Texture" type="ColorRect" parent="Enviroment/Wall"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -750.0
+offset_top = -50.0
+offset_right = 750.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.764706, 0.592157, 0.333333, 1)
+
+[node name="Collision" type="CollisionShape2D" parent="Enviroment/Wall"]
+position = Vector2(0, 25)
+shape = SubResource("RectangleShape2D_8gn0s")
+
+[node name="Wall2" type="StaticBody2D" parent="Enviroment"]
+position = Vector2(0, -750)
+collision_layer = 2
+collision_mask = 9
+
+[node name="Texture" type="ColorRect" parent="Enviroment/Wall2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -750.0
+offset_top = -50.0
+offset_right = 750.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.764706, 0.592157, 0.333333, 1)
+
+[node name="Collision" type="CollisionShape2D" parent="Enviroment/Wall2"]
+position = Vector2(0, 25)
+shape = SubResource("RectangleShape2D_8gn0s")
+
+[node name="Wall3" type="StaticBody2D" parent="Enviroment"]
+position = Vector2(-800, 0)
+collision_layer = 2
+collision_mask = 9
+
+[node name="Texture" type="ColorRect" parent="Enviroment/Wall3"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -750.0
+offset_right = 50.0
+offset_bottom = 750.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.764706, 0.592157, 0.333333, 1)
+
+[node name="Collision" type="CollisionShape2D" parent="Enviroment/Wall3"]
+position = Vector2(25, 0)
+shape = SubResource("RectangleShape2D_s7jto")
+
+[node name="Wall4" type="StaticBody2D" parent="Enviroment"]
+position = Vector2(800, 0)
+collision_layer = 2
+collision_mask = 9
+
+[node name="Texture" type="ColorRect" parent="Enviroment/Wall4"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -750.0
+offset_right = 50.0
+offset_bottom = 750.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.764706, 0.592157, 0.333333, 1)
+
+[node name="Collision" type="CollisionShape2D" parent="Enviroment/Wall4"]
+position = Vector2(-25, 0)
+shape = SubResource("RectangleShape2D_s7jto")
+
+[node name="Entities" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Player" parent="Entities" instance=ExtResource("1_yr625")]
+position = Vector2(-202, 88)
+
+[node name="Dummy" parent="Entities" instance=ExtResource("3_qhu7u")]
+position = Vector2(245, -344)
+rotation = 3.14159
+scale = Vector2(1, -1)
+
+[node name="Dummy2" parent="Entities" instance=ExtResource("3_qhu7u")]
+position = Vector2(-479, -456)
+
+[node name="Dummy3" parent="Entities" instance=ExtResource("3_qhu7u")]
+position = Vector2(-371, -455)
+
+[node name="Dummy4" parent="Entities" instance=ExtResource("3_qhu7u")]
+position = Vector2(-481, -347)
+
+[node name="Slime" parent="Entities" instance=ExtResource("4_dhxrs")]
+position = Vector2(260, 307)
+
+[node name="Slime2" parent="Entities" instance=ExtResource("4_dhxrs")]
+position = Vector2(312, 347)
+
+[node name="Slime3" parent="Entities" instance=ExtResource("4_dhxrs")]
+position = Vector2(236, 408)
+
+[node name="Slime4" parent="Entities" instance=ExtResource("4_dhxrs")]
+position = Vector2(340, 427)
+
+[node name="Slime5" parent="Entities" instance=ExtResource("4_dhxrs")]
+position = Vector2(468, 294)
+
+[node name="Slime6" parent="Entities" instance=ExtResource("4_dhxrs")]
+position = Vector2(461, 365)
+
+[node name="Slime7" parent="Entities" instance=ExtResource("4_dhxrs")]
+position = Vector2(362, 250)

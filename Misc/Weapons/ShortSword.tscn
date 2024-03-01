@@ -1,0 +1,303 @@
+[gd_scene load_steps=13 format=3 uid="uid://ccigibxvpl3h1"]
+
+[ext_resource type="Script" path="res://Misc/Weapons/ShortSword.gd" id="1_c1kxw"]
+[ext_resource type="PackedScene" uid="uid://bvjl0fk4jppod" path="res://Components/Weapons/WeaponComponent.tscn" id="2_8m55s"]
+[ext_resource type="Texture2D" uid="uid://d0jjd8sr263vm" path="res://Resources/Misc/Weapons/ShortSword/Sword.png" id="2_g3g7u"]
+[ext_resource type="Texture2D" uid="uid://bwbwievmlojww" path="res://Resources/Characters/Player/Hand.png" id="2_j2vjj"]
+[ext_resource type="PackedScene" uid="uid://b0s8xlsuoquht" path="res://Components/Weapons/CooldownComponent.tscn" id="3_ilw0n"]
+[ext_resource type="Texture2D" uid="uid://cohlf748wlgn5" path="res://Resources/Misc/Weapons/ShortSword/Smear.png" id="4_oihxs"]
+[ext_resource type="PackedScene" uid="uid://cbd7lw7lcj3t1" path="res://Components/Weapons/WeaponHitboxComponent.tscn" id="4_wdjp4"]
+
+[sub_resource type="Animation" id="Animation_xduvi"]
+resource_name = "PrimaryAttack"
+length = 0.8
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WeaponVisuals:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.32, 0.8),
+"transitions": PackedFloat32Array(1, 1.41421, 1, 1),
+"update": 0,
+"values": [0.0, -0.538353, 2.95792, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WeaponVisuals:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.28, 0.32, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-5, -9), Vector2(10, 3), Vector2(24, 6), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WeaponHitboxComponent/Collision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.23, 0.32),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WeaponVisuals/SmallSmear:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.36),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_4hw8i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WeaponVisuals:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WeaponVisuals:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WeaponHitboxComponent/Collision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("WeaponVisuals/Sprite:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WeaponVisuals/BigSmear:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("WeaponVisuals/SmallSmear:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_kjyvi"]
+resource_name = "SecondaryAttack"
+length = 0.8
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WeaponVisuals:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.32, 0.8),
+"transitions": PackedFloat32Array(1, 1.41421, 1, 1),
+"update": 0,
+"values": [0.0, -0.538353, 3.66519, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WeaponVisuals:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.28, 0.32, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-5, -9), Vector2(10, 3), Vector2(24, 6), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("WeaponHitboxComponent/Collision:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.23, 0.32),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"resetStats"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("WeaponVisuals/BigSmear:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.37),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_06t8a"]
+resource_name = "SecondaryCharge"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("WeaponVisuals/Sprite:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.725631, 0.702556, 0.284845, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("WeaponVisuals:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -0.349066]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4ddoy"]
+_data = {
+"PrimaryAttack": SubResource("Animation_xduvi"),
+"RESET": SubResource("Animation_4hw8i"),
+"SecondaryAttack": SubResource("Animation_kjyvi"),
+"SecondaryCharge": SubResource("Animation_06t8a")
+}
+
+[node name="ShortSword" type="Node2D" node_paths=PackedStringArray("weapon_hitbox_component") groups=["PlayerMovementComponent"]]
+script = ExtResource("1_c1kxw")
+weapon_hitbox_component = NodePath("WeaponHitboxComponent")
+BASE_DAMAGE = 10
+BASE_MAX_CHARGED_DAMAGE = 30
+BASE_CHARGE_SIZE = 1.3
+BASE_MINIMUM_CHARGE_SIZE = 1.1
+BASE_MOVEMENT_REDUCTION = 0.8
+BASE_CHARGE_MOVEMENT_REDUCTION = 0.3
+
+[node name="WeaponVisuals" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite2D" parent="WeaponVisuals"]
+texture_filter = 1
+position = Vector2(0, 0.137085)
+rotation = -0.785398
+scale = Vector2(4, 4)
+texture = ExtResource("2_g3g7u")
+
+[node name="BigSmear" type="Sprite2D" parent="WeaponVisuals"]
+visible = false
+texture_filter = 1
+position = Vector2(-42, -88)
+rotation = -0.785398
+scale = Vector2(5, 5)
+texture = ExtResource("4_oihxs")
+
+[node name="SmallSmear" type="Sprite2D" parent="WeaponVisuals"]
+visible = false
+texture_filter = 1
+position = Vector2(-39, -57)
+rotation = -0.785398
+scale = Vector2(3, 3)
+texture = ExtResource("4_oihxs")
+
+[node name="Hand" type="Sprite2D" parent="WeaponVisuals"]
+texture_filter = 1
+position = Vector2(0, 0.137085)
+rotation = 0.785398
+scale = Vector2(4, 4)
+texture = ExtResource("2_j2vjj")
+
+[node name="WeaponComponent" parent="." node_paths=PackedStringArray("weapon") instance=ExtResource("2_8m55s")]
+weapon = NodePath("..")
+
+[node name="CoolDownComponent" parent="." node_paths=PackedStringArray("weapon") instance=ExtResource("3_ilw0n")]
+weapon = NodePath("..")
+
+[node name="CoolDownComponent2" parent="." node_paths=PackedStringArray("weapon") instance=ExtResource("3_ilw0n")]
+weapon = NodePath("..")
+selectedOption = 1
+
+[node name="WeaponHitboxComponent" parent="." node_paths=PackedStringArray("weapon") instance=ExtResource("4_wdjp4")]
+weapon = NodePath("..")
+
+[node name="Collision" type="CollisionPolygon2D" parent="WeaponHitboxComponent"]
+polygon = PackedVector2Array(0, 0, 0, -95, 75, -69, 105, 0, 75, 69, 0, 95)
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4ddoy")
+}

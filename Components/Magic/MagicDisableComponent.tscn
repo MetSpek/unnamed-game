@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c06o6jdluufdt"]
+
+[ext_resource type="Script" path="res://Components/Magic/MagicDisableComponent.gd" id="1_8kb3e"]
+
+[node name="MagicDisableComponent" type="Node"]
+script = ExtResource("1_8kb3e")

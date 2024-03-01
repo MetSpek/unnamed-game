@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cm2cot0haprc8"]
+
+[ext_resource type="Script" path="res://Components/Magic/MagicProjectileComponent.gd" id="1_uob6a"]
+
+[node name="MagicProjectileComponent" type="Node"]
+script = ExtResource("1_uob6a")

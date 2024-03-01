@@ -1,0 +1,149 @@
+[gd_scene load_steps=17 format=3 uid="uid://5p15e0lye7ye"]
+
+[ext_resource type="Script" path="res://Misc/Magic/Ranged/FireBolt/FireBolt.gd" id="1_5xxxn"]
+[ext_resource type="Texture2D" uid="uid://bgwjx2cfcdh0b" path="res://Resources/Misc/Magic/Ranged/FireBolt/FireBolt.png" id="2_d1n2o"]
+[ext_resource type="PackedScene" uid="uid://bk43rb6sn1jv5" path="res://Components/Magic/MagicParticleComponent.tscn" id="3_a85ct"]
+[ext_resource type="Texture2D" uid="uid://tob1s1wmld8x" path="res://Resources/Misc/Magic/Particles/MagicParticle.png" id="3_dtdk0"]
+[ext_resource type="PackedScene" uid="uid://bjivrvg2wxrq8" path="res://Components/Magic/MagicHitboxComponent.tscn" id="3_kahsf"]
+[ext_resource type="Texture2D" uid="uid://is2w7iv5bx7o" path="res://Resources/Misc/Magic/Ranged/FireBolt/FireBolt_Explosion.png" id="3_o1pp1"]
+[ext_resource type="PackedScene" uid="uid://cm2cot0haprc8" path="res://Components/Magic/MagicProjectileComponent.tscn" id="3_sfm3h"]
+[ext_resource type="PackedScene" uid="uid://dfodrnvompgvl" path="res://Components/Magic/MagicDamageComponent.tscn" id="4_ndwb5"]
+[ext_resource type="PackedScene" uid="uid://2aiy1fwspkgt" path="res://Components/Magic/MagicManaComponent.tscn" id="5_wwd44"]
+[ext_resource type="PackedScene" uid="uid://c06o6jdluufdt" path="res://Components/Magic/MagicDisableComponent.tscn" id="8_8ngw6"]
+
+[sub_resource type="Curve" id="Curve_h41r8"]
+_data = [Vector2(0.0246305, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_yu31s"]
+offsets = PackedFloat32Array(0, 0.513228, 1)
+colors = PackedColorArray(0.557671, 0, 0.0635832, 1, 0.673246, 0.29978, 0.16555, 1, 0.899821, 0.552853, 0.481586, 1)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hxcgy"]
+radius = 12.0
+height = 36.0
+
+[sub_resource type="Animation" id="Animation_xl0qe"]
+resource_name = "Explosion"
+length = 0.5
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Explosion:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(7, 7)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Explosion:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_y5cci"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Explosion:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Explosion:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hpqkj"]
+_data = {
+"Explosion": SubResource("Animation_xl0qe"),
+"RESET": SubResource("Animation_y5cci")
+}
+
+[node name="FireBolt" type="Node2D"]
+script = ExtResource("1_5xxxn")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+rotation = 1.5708
+scale = Vector2(4, 4)
+texture = ExtResource("2_d1n2o")
+
+[node name="Explosion" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+texture = ExtResource("3_o1pp1")
+
+[node name="MagicParticleComponent" parent="." instance=ExtResource("3_a85ct")]
+emitting = true
+amount = 100
+lifetime = 0.3
+draw_order = 1
+texture = ExtResource("3_dtdk0")
+emission_shape = 1
+emission_sphere_radius = 10.0
+gravity = Vector2(0, 0)
+angular_velocity_min = 100.0
+angular_velocity_max = 100.0
+radial_accel_min = -40.0
+angle_min = -243.4
+angle_max = 108.2
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_h41r8")
+color_ramp = SubResource("Gradient_yu31s")
+
+[node name="MagicProjectileComponent" parent="." node_paths=PackedStringArray("magic_weapon") instance=ExtResource("3_sfm3h")]
+magic_weapon = NodePath("..")
+BASE_SPEED = 1000
+
+[node name="MagicDamageComponent" parent="." instance=ExtResource("4_ndwb5")]
+BASE_DAMAGE = 10
+
+[node name="MagicManaComponent" parent="." instance=ExtResource("5_wwd44")]
+BASE_MANA_COST = 25
+
+[node name="MagicDisableComponent" parent="." node_paths=PackedStringArray("magic_projectile_component", "magic_particle_component", "sprite", "magic_hitbox_component") instance=ExtResource("8_8ngw6")]
+magic_projectile_component = NodePath("../MagicProjectileComponent")
+magic_particle_component = NodePath("../MagicParticleComponent")
+sprite = NodePath("../Sprite")
+magic_hitbox_component = NodePath("../DamageHitboxComponent")
+
+[node name="DamageHitboxComponent" parent="." node_paths=PackedStringArray("magic_weapon", "magic_damage_component") instance=ExtResource("3_kahsf")]
+magic_weapon = NodePath("..")
+magic_damage_component = NodePath("../MagicDamageComponent")
+
+[node name="Collision" type="CollisionShape2D" parent="DamageHitboxComponent"]
+position = Vector2(2, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_hxcgy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hpqkj")
+}

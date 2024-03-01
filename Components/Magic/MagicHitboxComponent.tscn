@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjivrvg2wxrq8"]
+
+[ext_resource type="Script" path="res://Components/Magic/MagicHitboxComponent.gd" id="1_daup6"]
+
+[node name="MagicHitboxComponent" type="Area2D"]
+collision_layer = 8
+collision_mask = 130
+script = ExtResource("1_daup6")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

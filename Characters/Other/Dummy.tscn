@@ -1,0 +1,130 @@
+[gd_scene load_steps=13 format=3 uid="uid://bk8qrfhx3oyci"]
+
+[ext_resource type="Texture2D" uid="uid://brbblodiuli88" path="res://Resources/Characters/Player/Shadow.png" id="1_a5af1"]
+[ext_resource type="Script" path="res://Characters/Other/Dummy.gd" id="1_i3jq2"]
+[ext_resource type="Texture2D" uid="uid://csnmocofi3e0l" path="res://Resources/Characters/Other/Dummy.png" id="1_ivdoq"]
+[ext_resource type="PackedScene" uid="uid://cmsxxf0mr8mnf" path="res://Components/General/HitboxComponent.tscn" id="2_1dwpg"]
+[ext_resource type="PackedScene" uid="uid://b4k8a6jcijgj0" path="res://Components/General/DamageNumberComponent.tscn" id="3_muvfy"]
+[ext_resource type="Texture2D" uid="uid://cj5ay1t7qqmdj" path="res://Resources/Characters/Other/Blush.png" id="3_mxre3"]
+[ext_resource type="Material" uid="uid://gcnc2t6ry58q" path="res://Misc/Fx/Flash.tres" id="3_tmh0f"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k0mm2"]
+radius = 7.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plp8p"]
+size = Vector2(55, 75)
+
+[sub_resource type="Animation" id="Animation_2jqcs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Blush:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_er8s2"]
+resource_name = "get_damaged"
+length = 3.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pivot/Blush:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Pivot:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.0930818, 0.132393, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dc78b"]
+_data = {
+"RESET": SubResource("Animation_2jqcs"),
+"get_damaged": SubResource("Animation_er8s2")
+}
+
+[node name="Dummy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_i3jq2")
+
+[node name="Shadow" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-1.13687e-13, 33)
+scale = Vector2(5, 5)
+texture = ExtResource("1_a5af1")
+
+[node name="Pivot" type="Node2D" parent="."]
+position = Vector2(-2, 30)
+
+[node name="Sprite" type="Sprite2D" parent="Pivot"]
+texture_filter = 1
+material = ExtResource("3_tmh0f")
+position = Vector2(2, -30)
+scale = Vector2(5, 5)
+texture = ExtResource("1_ivdoq")
+flip_h = true
+
+[node name="Blush" type="Sprite2D" parent="Pivot"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+position = Vector2(2, -30)
+scale = Vector2(5, 5)
+texture = ExtResource("3_mxre3")
+flip_h = true
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-2, 28)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_k0mm2")
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("damage_number_component") instance=ExtResource("2_1dwpg")]
+damage_number_component = NodePath("DamageNumberComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+visible = false
+position = Vector2(-2.5, -2.5)
+shape = SubResource("RectangleShape2D_plp8p")
+
+[node name="DamageNumberComponent" parent="HitboxComponent" instance=ExtResource("3_muvfy")]
+position = Vector2(0, -43)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_dc78b")
+}
+playback_default_blend_time = 0.05

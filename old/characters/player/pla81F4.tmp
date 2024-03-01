@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=3 uid="uid://1x0khwlxcdjk"]
+
+[ext_resource type="Script" path="res://characters/player/player.gd" id="1_t001g"]
+[ext_resource type="Texture2D" uid="uid://bljvb6f6tfofp" path="res://resources/characters/player/Player.png" id="2_vt2vl"]
+[ext_resource type="Script" path="res://system/general/health.gd" id="3_30cus"]
+[ext_resource type="Script" path="res://characters/player/Hand.gd" id="3_gknuo"]
+[ext_resource type="PackedScene" uid="uid://dneqlm5a8bowx" path="res://misc/weapons/short_sword.tscn" id="3_j3trn"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_1f70r"]
+radius = 11.0
+height = 42.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_mask = 2
+script = ExtResource("1_t001g")
+base_health = 20
+base_speed = 300
+base_attack_speed = 1
+base_dodge_cooldown = 1.0
+base_dodge_invulnerability = 0.2
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -15)
+scale = Vector2(5, 5)
+texture = ExtResource("2_vt2vl")
+flip_h = true
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, 18)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_1f70r")
+
+[node name="Camera" type="Camera2D" parent="."]
+scale = Vector2(0.5, 0.9)
+zoom = Vector2(1.2, 1.2)
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
+
+[node name="Hand" type="Node2D" parent="."]
+position = Vector2(0, 3.8147e-06)
+scale = Vector2(1, 1)
+script = ExtResource("3_gknuo")
+
+[node name="ShortSword" parent="Hand" instance=ExtResource("3_j3trn")]
+
+[node name="Dodge" type="Node" parent="."]
+
+[node name="DodgeTimer" type="Timer" parent="Dodge"]
+one_shot = true
+
+[node name="InvulnerableTimer" type="Timer" parent="Dodge"]
+one_shot = true
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("3_30cus")
+
+[node name="Attack" type="Node" parent="."]
+
+[node name="AttackTimer" type="Timer" parent="Attack"]
+one_shot = true
+
+[connection signal="timeout" from="Dodge/DodgeTimer" to="." method="_on_dodge_timer_timeout"]
+[connection signal="timeout" from="Dodge/InvulnerableTimer" to="." method="_on_invulnerable_timer_timeout"]
+[connection signal="timeout" from="Attack/AttackTimer" to="." method="_on_attack_timer_timeout"]

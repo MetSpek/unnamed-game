@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://mh7ky5ei05dl"]
+
+[ext_resource type="Script" path="res://Components/Characters/DodgeComponent.gd" id="1_bmxd5"]
+[ext_resource type="Texture2D" uid="uid://swcour5pvys8" path="res://Resources/Characters/Player/Particles/DashParticle.png" id="2_4xoao"]
+
+[sub_resource type="Curve" id="Curve_qjjv0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 1, Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -1.00001, 0.0, 1, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_7qi0n"]
+offsets = PackedFloat32Array(0.205128, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.321569)
+
+[node name="DodgeComponent" type="Node2D"]
+script = ExtResource("1_bmxd5")
+
+[node name="CooldownTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="DodgeLengthTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+texture_filter = 1
+emitting = false
+amount = 100
+texture = ExtResource("2_4xoao")
+gravity = Vector2(0, 0)
+angle_min = -20.0
+angle_max = 20.0
+scale_amount_min = 4.0
+scale_amount_max = 4.0
+scale_amount_curve = SubResource("Curve_qjjv0")
+color_ramp = SubResource("Gradient_7qi0n")
+
+[connection signal="timeout" from="CooldownTimer" to="." method="_on_cooldown_timer_timeout"]
+[connection signal="timeout" from="DodgeLengthTimer" to="." method="_on_dodge_length_timer_timeout"]

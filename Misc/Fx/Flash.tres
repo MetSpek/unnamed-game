@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://gcnc2t6ry58q"]
+
+[ext_resource type="Shader" path="res://Misc/Fx/Flash.gdshader" id="1_fa3tv"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_fa3tv")
+shader_parameter/flash_color = Color(0.717647, 0.717647, 0.717647, 0.639216)
+shader_parameter/flash_modifier = 0.0
