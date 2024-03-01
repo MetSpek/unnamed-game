@@ -60,7 +60,8 @@ func useMagic():
 
 func getRandomCard():
 	var card = load(deck[randi() % deck.size()].scene).instantiate()
-	get_tree().call_group("HUDHand", "createCard", card)
+	var magic_name = deck[randi() % deck.size()].name
+	get_tree().call_group("HUDHand", "createCard", card, magic_name)
 	return card
 
 

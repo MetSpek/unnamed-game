@@ -74,7 +74,6 @@ shape = SubResource("CircleShape2D_5c3x7")
 
 [node name="MagicHitboxComponent" parent="." node_paths=PackedStringArray("magic_weapon", "magic_damage_component") instance=ExtResource("5_hri85")]
 visible = false
-collision_mask = 130
 magic_weapon = NodePath("..")
 magic_damage_component = NodePath("../MagicDamageComponent")
 

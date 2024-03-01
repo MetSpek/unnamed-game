@@ -2,5 +2,19 @@
 
 [ext_resource type="Script" path="res://Components/Characters/Enemies/FollowComponent.gd" id="1_ljm1d"]
 
-[node name="FollowComponent" type="Node2D"]
+[node name="FollowComponent" type="NavigationAgent2D"]
+avoidance_enabled = true
 script = ExtResource("1_ljm1d")
+
+[node name="RecalculateTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="LoS" type="RayCast2D" parent="."]
+target_position = Vector2(0, 100)
+collision_mask = 256
+collide_with_areas = true
+
+[connection signal="navigation_finished" from="." to="." method="_on_navigation_finished"]
+[connection signal="velocity_computed" from="." to="." method="_on_velocity_computed"]
+[connection signal="timeout" from="RecalculateTimer" to="." method="_on_recalculate_timer_timeout"]

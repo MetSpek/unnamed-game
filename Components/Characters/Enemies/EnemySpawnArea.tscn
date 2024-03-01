@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cj08a4pa44afj"]
+
+[ext_resource type="Script" path="res://Components/Characters/Enemies/EnemySpawnArea.gd" id="1_ojvvd"]
+
+[node name="EnemySpawnArea" type="Area2D"]
+script = ExtResource("1_ojvvd")

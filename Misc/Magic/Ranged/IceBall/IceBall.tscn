@@ -87,7 +87,7 @@ sprite = NodePath("../Sprite")
 
 [node name="TriggerHitbox" type="Area2D" parent="."]
 collision_layer = 8
-collision_mask = 134
+collision_mask = 132
 
 [node name="Trigger" type="CollisionShape2D" parent="TriggerHitbox"]
 shape = SubResource("CircleShape2D_v654c")

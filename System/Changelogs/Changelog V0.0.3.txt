@@ -1,0 +1,18 @@
+Changelog V0.0.3
+
+# Enemies
+- Added Shroomy
+
+# Visuals
+- Added basic 'Forest' tileset
+
+# Levels
+- Added test level
+- Added enemy spawn area
+
+# Improvements
+- Slimes are now smarter
+
+# Known issues
+- Player doesnt properly hide behind wall
+- Shroomy dies when charging against water

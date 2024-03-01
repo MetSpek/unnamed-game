@@ -7,11 +7,13 @@ class_name DamageNumber
 @export var duration := .5
 @export var speed := 50
 
+var color := Color.WHITE
 var damage : int
 var direction : Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	damage_label.set_deferred("font_color", color)
 	damage_label.text = str(damage)
 	suicide_timer.wait_time = duration
 	suicide_timer.start()

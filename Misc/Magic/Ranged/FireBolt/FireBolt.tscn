@@ -16,8 +16,8 @@ _data = [Vector2(0.0246305, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_yu31s"]
-offsets = PackedFloat32Array(0, 0.513228, 1)
-colors = PackedColorArray(0.557671, 0, 0.0635832, 1, 0.673246, 0.29978, 0.16555, 1, 0.899821, 0.552853, 0.481586, 1)
+offsets = PackedFloat32Array(0, 0.019943, 0.513228, 1)
+colors = PackedColorArray(0.557671, 0, 0.0635832, 1, 0.562804, 0.013313, 0.0681115, 1, 0.673246, 0.29978, 0.16555, 1, 0.899821, 0.552853, 0.481586, 1)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hxcgy"]
 radius = 12.0
@@ -86,6 +86,8 @@ _data = {
 }
 
 [node name="FireBolt" type="Node2D"]
+modulate = Color(3, 2, 2, 1)
+position = Vector2(-20, 1)
 script = ExtResource("1_5xxxn")
 
 [node name="Sprite" type="Sprite2D" parent="."]
@@ -116,6 +118,7 @@ angle_max = 108.2
 scale_amount_min = 2.0
 scale_amount_max = 4.0
 scale_amount_curve = SubResource("Curve_h41r8")
+color = Color(0.286275, 0.286275, 0.286275, 0.411765)
 color_ramp = SubResource("Gradient_yu31s")
 
 [node name="MagicProjectileComponent" parent="." node_paths=PackedStringArray("magic_weapon") instance=ExtResource("3_sfm3h")]
@@ -135,6 +138,7 @@ sprite = NodePath("../Sprite")
 magic_hitbox_component = NodePath("../DamageHitboxComponent")
 
 [node name="DamageHitboxComponent" parent="." node_paths=PackedStringArray("magic_weapon", "magic_damage_component") instance=ExtResource("3_kahsf")]
+visible = false
 magic_weapon = NodePath("..")
 magic_damage_component = NodePath("../MagicDamageComponent")
 

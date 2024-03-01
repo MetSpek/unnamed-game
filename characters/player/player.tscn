@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://cojnrytvoxxg2"]
+[gd_scene load_steps=23 format=3 uid="uid://cojnrytvoxxg2"]
 
 [ext_resource type="Script" path="res://Characters/Player/Player.gd" id="1_731if"]
 [ext_resource type="PackedScene" uid="uid://sk5khgxptof" path="res://Components/Characters/PlayerMovementComponent.tscn" id="2_10tjl"]
 [ext_resource type="Texture2D" uid="uid://brbblodiuli88" path="res://Resources/Characters/Player/Shadow.png" id="2_58llx"]
+[ext_resource type="Texture2D" uid="uid://b23iov5irqo5k" path="res://Resources/System/Lights/Light Texture.webp" id="2_d1n8e"]
 [ext_resource type="PackedScene" uid="uid://d3e7gdlbqkg7q" path="res://System/Player/HUD.tscn" id="2_f2vrs"]
 [ext_resource type="Texture2D" uid="uid://i2h1uvtegltb" path="res://Resources/Characters/Player/Character_Standing.png" id="3_fy41h"]
 [ext_resource type="PackedScene" uid="uid://bq1h7k5un62xl" path="res://Components/Magic/MagicComponent.tscn" id="3_nghrj"]
@@ -205,6 +206,16 @@ height = 58.0
 collision_mask = 2
 script = ExtResource("1_731if")
 
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+color = Color(0.898039, 0.803922, 0.580392, 1)
+energy = 0.6
+range_z_min = -1
+range_z_max = 1
+shadow_enabled = true
+texture = ExtResource("2_d1n8e")
+texture_scale = 2.0
+
 [node name="UI" parent="." node_paths=PackedStringArray("health_component", "magic_component") instance=ExtResource("2_f2vrs")]
 health_component = NodePath("../HealthComponent")
 magic_component = NodePath("../MagicComponent")
@@ -222,6 +233,7 @@ player = NodePath("..")
 player_movement_component = NodePath("../PlayerMovementComponent")
 
 [node name="Body" type="Node2D" parent="."]
+z_index = 2
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Body"]
 texture_filter = 1
@@ -245,6 +257,7 @@ libraries = {
 }
 
 [node name="Hand" type="Node2D" parent="Body"]
+z_index = 1
 position = Vector2(-6, 0)
 
 [node name="ShortSword" parent="Body/Hand" instance=ExtResource("4_bdgb2")]
@@ -259,12 +272,13 @@ RECHARGE_RATE = 0.2
 RECHARGE_COOLDOWN = 3
 
 [node name="PlayerMovementComponent" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_10tjl")]
-BASE_MOVEMENT_SPEED = 400
+BASE_MOVEMENT_SPEED = 250
 player = NodePath("..")
 
 [node name="HealthComponent" parent="." groups=["PlayerHealth"] instance=ExtResource("6_mg5u2")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.8, 0.8)
 process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0

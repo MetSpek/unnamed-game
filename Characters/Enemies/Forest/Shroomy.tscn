@@ -1,0 +1,256 @@
+[gd_scene load_steps=23 format=3 uid="uid://cbabqb6th0oer"]
+
+[ext_resource type="Texture2D" uid="uid://brbblodiuli88" path="res://Resources/Characters/Player/Shadow.png" id="1_k6hbq"]
+[ext_resource type="Script" path="res://Characters/Enemies/Forest/Shroomy.gd" id="1_u2oqi"]
+[ext_resource type="Texture2D" uid="uid://43uk3prrgrup" path="res://Resources/Characters/Enemies/Shroomy/Shroomy.png" id="3_328ju"]
+[ext_resource type="Texture2D" uid="uid://b8na3j5ww2u38" path="res://Resources/Characters/Enemies/Shroomy/Shroomy_Attack1.png" id="3_d0eyq"]
+[ext_resource type="PackedScene" uid="uid://714reroyuv4h" path="res://Components/General/HealthComponent.tscn" id="3_ifmu3"]
+[ext_resource type="Texture2D" uid="uid://ut1goyh1nidv" path="res://Resources/Characters/Enemies/Shroomy/Shroomy_Walk1.png" id="4_gyid8"]
+[ext_resource type="Texture2D" uid="uid://oykgldqvtte8" path="res://Resources/Characters/Enemies/Shroomy/Shroomy_Attack2.png" id="4_nlfya"]
+[ext_resource type="Texture2D" uid="uid://dagfu6axuwlbq" path="res://Resources/Characters/Enemies/Shroomy/Shroomy_Attack3.png" id="5_ogwh0"]
+[ext_resource type="Texture2D" uid="uid://cn163djnc5mf4" path="res://Resources/Characters/Enemies/Shroomy/Shroomy_Walk2.png" id="5_po35j"]
+[ext_resource type="Texture2D" uid="uid://dc3kv78jjha7w" path="res://Resources/Characters/Enemies/Shroomy/Shroomy_Attack4.png" id="6_3tdtu"]
+[ext_resource type="Texture2D" uid="uid://bxacxwk55ofhi" path="res://Resources/Characters/Enemies/Shroomy/Shroomy_Walk3.png" id="6_usdy4"]
+[ext_resource type="PackedScene" uid="uid://dvhkggesno4p6" path="res://Components/Characters/Enemies/FollowComponent.tscn" id="8_yd0k7"]
+[ext_resource type="PackedScene" uid="uid://cf24yn614qhyx" path="res://Components/Characters/Enemies/IdleComponent.tscn" id="9_yn25y"]
+[ext_resource type="PackedScene" uid="uid://cmsxxf0mr8mnf" path="res://Components/General/HitboxComponent.tscn" id="10_b0tpg"]
+[ext_resource type="PackedScene" uid="uid://b4k8a6jcijgj0" path="res://Components/General/DamageNumberComponent.tscn" id="11_yitm1"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hond0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_d0eyq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_nlfya")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ogwh0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_3tdtu")
+}],
+"loop": true,
+"name": &"Attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_328ju")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_gyid8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_po35j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_gyid8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_usdy4")
+}],
+"loop": true,
+"name": &"Walking",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hw07i"]
+
+[sub_resource type="Animation" id="Animation_jp2jg"]
+resource_name = "Attack"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Attack"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.85, 0.9, 0.95, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 3, 2, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_0do56"]
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_xrex0"]
+resource_name = "Standing"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_s4c2c"]
+resource_name = "Walking"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"Walking"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d4rdq"]
+_data = {
+"Attack": SubResource("Animation_jp2jg"),
+"RESET": SubResource("Animation_0do56"),
+"Standing": SubResource("Animation_xrex0"),
+"Walking": SubResource("Animation_s4c2c")
+}
+
+[node name="Shroomy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_u2oqi")
+jump_speed = 600
+jump_duration = 0.7
+
+[node name="Shadow" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-2.8026e-45, -3)
+scale = Vector2(5, 5)
+texture = ExtResource("1_k6hbq")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -25)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_hond0")
+animation = &"Idle"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+rotation = 1.5708
+shape = SubResource("CircleShape2D_hw07i")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_d4rdq")
+}
+
+[node name="Attack" type="Node2D" parent="."]
+
+[node name="ChargeRaycast" type="RayCast2D" parent="Attack"]
+position = Vector2(0, -10)
+enabled = false
+target_position = Vector2(15, 0)
+collision_mask = 3
+
+[node name="AttackDuration" type="Timer" parent="Attack"]
+one_shot = true
+
+[node name="TrueLoS" type="RayCast2D" parent="Attack"]
+collision_mask = 2
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_ifmu3")]
+BASE_HEALTH = 10
+
+[node name="FollowComponent" parent="." node_paths=PackedStringArray("enemy") instance=ExtResource("8_yd0k7")]
+enemy = NodePath("..")
+follow_speed = 200
+min_range = 250
+avoid_distance = 20
+
+[node name="IdleComponent" parent="." node_paths=PackedStringArray("enemy") instance=ExtResource("9_yn25y")]
+enemy = NodePath("..")
+wait_time = 3.0
+
+[node name="RayCast2D" type="RayCast2D" parent="IdleComponent"]
+target_position = Vector2(60, 0)
+collision_mask = 2
+
+[node name="HitboxComponent" parent="." node_paths=PackedStringArray("health_component", "damage_number_component") instance=ExtResource("10_b0tpg")]
+visible = false
+health_component = NodePath("../HealthComponent")
+damage_number_component = NodePath("DamageNumberComponent")
+
+[node name="Collision" type="CollisionPolygon2D" parent="HitboxComponent"]
+polygon = PackedVector2Array(10, 0, 25, -35, 30, -40, 30, -50, 25, -55, 20, -60, -20, -60, -25, -55, -30, -50, -30, -40, -25, -35, -10, 0)
+
+[node name="DamageNumberComponent" parent="HitboxComponent" instance=ExtResource("11_yitm1")]
+position = Vector2(0, -27)
+
+[connection signal="timeout" from="Attack/AttackDuration" to="." method="_on_attack_duration_timeout"]

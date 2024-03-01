@@ -78,17 +78,16 @@ _data = {
 
 [node name="Dummy" type="CharacterBody2D"]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 258
 script = ExtResource("1_i3jq2")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture_filter = 1
-position = Vector2(-1.13687e-13, 33)
+position = Vector2(2, 3)
 scale = Vector2(5, 5)
 texture = ExtResource("1_a5af1")
 
 [node name="Pivot" type="Node2D" parent="."]
-position = Vector2(-2, 30)
 
 [node name="Sprite" type="Sprite2D" parent="Pivot"]
 texture_filter = 1
@@ -121,7 +120,7 @@ position = Vector2(-2.5, -2.5)
 shape = SubResource("RectangleShape2D_plp8p")
 
 [node name="DamageNumberComponent" parent="HitboxComponent" instance=ExtResource("3_muvfy")]
-position = Vector2(0, -43)
+position = Vector2(0, -67)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

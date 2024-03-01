@@ -29,7 +29,14 @@ var magic_missile = {
 	"selected" : true
 }
 
-var cards = [firebolt, iceball, magic_missile]
+var poison_dart = {
+	"name" : "Poison Dart",
+	"scene" : "res://Misc/Magic/Ranged/PoisonDart/PoisonDart.tscn",
+	"unlocked" : true,
+	"selected" : true
+}
+
+var cards = [poison_dart]
 var deck = []
 
 func _ready():
